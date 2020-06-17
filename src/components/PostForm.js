@@ -1,71 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react'
+import { findByLabelText } from '@testing-library/react';
 
-export class PostForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      posts: [
-        {
-          id: 0,
-          pic: 'https://mypic.com/pic1',
-          name: 'Derrick',
-          message: 'Message 1',
-        },
-        {
-          id: 1,
-          pic: 'https://mypic.com/pic2',
-          name: 'Regina',
-          message: 'Message 2',
-        },
-        {
-          id: 2,
-          pic: 'https://mypic.com/pic3',
-          name: 'Sam',
-          message: 'Message 3',
-        },
-      ],
-    };
-  }
-
-  handleClick = (e) => {
-      const NEWPOST = {
-        id: 4,
-        pic: 'https://mypic.com/pic1',
-        name: e.target.value,
-        message: e.target.value,
-      };
-      console.log(NEWPOST)
-    //   this.setState(prevState => {
-    //       posts: [...prevState.posts, NEWPOST]
-    //   })
-  }
-  render() {
-    return (
-      <div>
-        <h1>Post Form</h1>
-        <label htmlFor='name'>Username </label>
-        <input
-          type='text'
-          name='username'
-          id='username'
-          placeholder='Enter your username'
-          value=""
-          onChange={this.handleChange}
-        />
-        <label htmlFor='name'>Message </label>
-        <input
-          type='text'
-          name='message'
-          id='message'
-          placeholder='Enter your message'
-          value=""
-          onChange={this.handleChange}
-        />
-        <button onClick={this.handleClick}>Add New Chirp</button>
-      </div>
-    );
-  }
+const PostForm = (props) => {
+  return (
+    <div className='input-group'>
+      <input
+        type='text'
+        className='form-control mx-2'
+        placeholder='Enter Username'
+        value={props.newUsername}
+        onChange={props.handleUsername}
+      />
+      <input
+        type='text'
+        className='form-control mx-2'
+        placeholder='Enter Message'
+        value={props.newMessage}
+        onChange={props.handleMessage}
+      />
+      <button
+        type='button'
+        className='btn btn-primary mx-2'
+        onClick={props.handleSubmit}>
+        <svg
+          class='bi bi-plus-circle-fill'
+          width='1em'
+          height='1em'
+          viewBox='0 0 16 16'
+          fill='currentColor'
+          xmlns='http://www.w3.org/2000/svg'>
+          <path
+            fill-rule='evenodd'
+            d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z'
+          />
+        </svg>{' '}
+        Chirp
+      </button>
+    </div>
+  );
 }
 
-export default PostForm;
+export default PostForm
