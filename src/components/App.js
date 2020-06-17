@@ -28,7 +28,7 @@ export class App extends Component {
       ],
     };
   }
-
+// TODO: Find out if we need to bind our methods to this in the constructor or do we use an arrow function
   handleUsername = (e) => {
     this.setState({
       newUsername: e.target.value,
@@ -40,11 +40,12 @@ export class App extends Component {
     });
   };
   handleSubmit = () => {
+    let newChirp = {
+      username: this.state.newUsername,
+      message: this.state.newMessage,
+    };
     this.setState({
-      posts: [
-        ...this.state.posts,
-        { username: this.state.newUsername, message: this.state.newMessage },
-      ],
+      posts: [...this.state.posts, newChirp,],
     });
     this.setState({
       newUsername: '',
@@ -67,7 +68,7 @@ export class App extends Component {
     });
 
     return (
-      <React.Fragment>
+      <div class='container'>
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
           <a className='navbar-brand' href='http://yahoo.com'>
             Chirper
@@ -92,27 +93,74 @@ export class App extends Component {
                   </a>
                 </li>
                 <li>
-                  <div className='input-group'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Enter Username'
-                      value={this.state.newUsername}
-                      onChange={this.handleUsername}
-                    />
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Enter Message'
-                      value={this.state.newMessage}
-                      onChange={this.handleMessage}
-                    />
-                    <div className='input-group-prepend'>
-                      <span
-                        className='input-group-text'
-                        onClick={this.handleSubmit}>
-                        Add Chirp
-                      </span>
+                  <button
+                    type='button'
+                    className='btn btn-primary'
+                    data-toggle='modal'
+                    data-target='#exampleModal'>
+                    Add Chirp
+                  </button>
+
+                  <div
+                    className='modal fade'
+                    id='exampleModal'
+                    tabIndex='-1'
+                    role='dialog'
+                    aria-labelledby='exampleModalLabel'
+                    aria-hidden='true'>
+                    <div className='modal-dialog' role='document'>
+                      <div className='modal-content'>
+                        <div className='modal-header'>
+                          <h5
+                            className='modal-title text-primary'
+                            id='exampleModalLabel'>
+                            Add New Chirps
+                          </h5>
+                          <button
+                            type='button'
+                            className='close'
+                            data-dismiss='modal'
+                            aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                          </button>
+                        </div>
+                        <div className='modal-body'>
+                          <ul>
+                            <li>
+                              <div className='input-group'>
+                                <input
+                                  type='text'
+                                  className='form-control  mx-2'
+                                  placeholder='Enter Username'
+                                  value={this.state.newUsername}
+                                  onChange={this.handleUsername}
+                                />
+                                <input
+                                  type='text'
+                                  className='form-control  mx-2'
+                                  placeholder='Enter Message'
+                                  value={this.state.newMessage}
+                                  onChange={this.handleMessage}
+                                />
+                                <button
+                                  type='button'
+                                  className='btn btn-primary mx-2'
+                                  onClick={this.handleSubmit}>
+                                  Add Chirp
+                                </button>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className='modal-footer'>
+                          <button
+                            type='button'
+                            className='btn btn-secondary'
+                            data-dismiss='modal'>
+                            Close
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -122,8 +170,7 @@ export class App extends Component {
         </nav>
 
         {newPost}
-
-      </React.Fragment>
+      </div>
     );
   }
 }
